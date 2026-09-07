@@ -1,0 +1,75 @@
+Step 1 — Structured Response Requirements
+The AI response must contain an alerts array.
+Each alert must contain exactly four fields:
+* icon
+* title
+* description
+* priority
+Response Structure
+{
+  "alerts": [
+    {
+      "icon": "string",
+      "title": "string",
+      "description": "string",
+      "priority": "low | medium | high"
+    }
+  ]
+}
+Field Requirements
+1. icon
+The icon must be one of the following exact values:
+* abs
+* airbag
+* battery
+* check_engine
+* esp
+* gas_tank
+* tire_pressure
+* washer_fluid
+* oil
+* coolant_temperature
+* spark_plug
+* warning
+Use warning for an issue that does not correspond to one of the specific icons above.
+Never create or return an icon that is not on this list.
+2. title
+* Must describe the vehicle issue.
+* Must be 20 characters or fewer.
+* Keep it short and easy for the driver to understand.
+3. description
+* Must briefly explain the issue.
+* Must be 50 characters or fewer.
+* Keep the description simple and understandable to the average driver.
+4. priority
+Priority must be exactly one of:
+* low
+* medium
+* high
+The application will determine the icon color based on the priority. The AI should not return a color.
+Multiple Issues
+If multiple issues are detected, return multiple objects in the alerts array.
+Example:
+{
+  "alerts": [
+    {
+      "icon": "check_engine",
+      "title": "Check Engine Light",
+      "description": "Engine fault detected",
+      "priority": "high"
+    },
+    {
+      "icon": "tire_pressure",
+      "title": "Low Tire Pressure",
+      "description": "One or more tires may be low",
+      "priority": "medium"
+    }
+  ]
+}
+No Issues
+If no recognizable vehicle issues are present, return an empty array:
+{
+  "alerts": []
+}
+Do not create a “No Issues” alert. The application will interpret an empty alerts array as no issues detected.
+That’s the complete Step 1 specification. You can use this as the blueprint when we do Step 2 and build the actual Structured Outputs schema.
